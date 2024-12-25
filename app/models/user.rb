@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :name, presence: { message: 'Por favor, informe nome de usuário' }
   validates :email, presence: { message: 'Por favor, insira um endereço de e-mail válido.' }
   validates :email, uniqueness: { message: 'Este e-mail já está em uso.' }
+  validates :password, confirmation: { message: 'As senhas não coincidem.' }, if: :password_required?
   validates :password, presence: { message: 'Por favor, digite a senha.' }, if: :password_required?
 
   def valid_password?(password)
