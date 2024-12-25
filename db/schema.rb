@@ -10,11 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_23_182843) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_25_223705) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "applicants", force: :cascade do |t|
+    t.string "name"
+    t.string "document"
+    t.date "birth_date"
+    t.decimal "salary", precision: 10, scale: 2
+    t.decimal "inss_discount", precision: 10, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document"], name: "index_applicants_on_document", unique: true
+  end
+
   create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "password_digest"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
