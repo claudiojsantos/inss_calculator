@@ -1,0 +1,8 @@
+%turbo-frame#main_frame
+  .text-center.mt-5
+    %h1 Bem-vindo ao Projeto!
+    %p
+      Você está logado como #{current_user&.email}.
+    .mt-5
+      %turbo-frame#main_frame
+        %p Selecione uma opção do menu ao lado para começar.
