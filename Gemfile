@@ -56,6 +56,7 @@ gem 'sidekiq'
 
 group :development, :test do
   gem 'brakeman', require: false
+  gem 'byebug'
   gem 'debug', platforms: %i[ mri windows ], require: 'debug/prelude'
   gem 'dotenv'
   gem 'factory_bot_rails'
