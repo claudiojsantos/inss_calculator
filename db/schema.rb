@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_25_223705) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_25_231413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "address"
+    t.string "number"
+    t.string "neighborhood"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.bigint "applicant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_addresses_on_applicant_id"
+  end
 
   create_table "applicants", force: :cascade do |t|
     t.string "name"
@@ -25,6 +38,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_25_223705) do
     t.index ["document"], name: "index_applicants_on_document", unique: true
   end
 
+  create_table "contacts", force: :cascade do |t|
+    t.integer "contact_type"
+    t.string "value"
+    t.bigint "applicant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["applicant_id"], name: "index_contacts_on_applicant_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -35,4 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_25_223705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "addresses", "applicants"
+  add_foreign_key "contacts", "applicants"
 end
