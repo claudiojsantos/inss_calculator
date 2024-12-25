@@ -13,9 +13,31 @@
     %link{:href => "/icon.svg", :rel => "icon", :type => "image/svg+xml"}/
     %link{:href => "/icon.png", :rel => "apple-touch-icon"}/
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
+    = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     = javascript_importmap_tags
     = javascript_include_tag "application", "data-turbo-track": "reload", defer: true
   %body
-    .container
+    .container-fluid
       .row
-        = yield
+        #sidebar.bg-dark.d-flex.flex-column.justify-content-between
+          .d-flex.flex-column.align-items-start.pt-3
+            %button#sidebar-toggle.btn.btn-light
+              %i.fas.fa-bars
+            .sidebar-header.ms-3
+              Menu
+            %ul.nav.flex-column.mt-4
+              %li.nav-item
+                = link_to root_path, data: { turbo_frame: "main_frame" }, class: "nav-link text-light d-flex align-items-center" do
+                  %i.fas.fa-home
+                  %span.ms-2 Home
+          .mt-auto.mb-4
+            %li.nav-item
+              %button{ type: "submit", class: "btn btn-link text-danger", form: "logout-form" }
+                %i.fas.fa-sign-out-alt
+                %span.ms-2 Sair
+              = form_with url: logout_path, method: :delete, id: "logout-form", class: "d-none" do
+                %input{ type: "hidden", name: "dummy", value: "dummy" }
+
+        #main-content.col-md-10.offset-md-2.p-5
+          %turbo-frame#main_frame
+            = yield
