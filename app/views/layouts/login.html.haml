@@ -1,0 +1,26 @@
+!!! 5
+%html
+  %head
+    %meta{ charset: "UTF-8" }
+    %title= content_for(:title) || "Login - Inss Challenge"
+    %meta{ name: "viewport", content: "width=device-width,initial-scale=1" }
+    = csrf_meta_tags
+    = csp_meta_tag
+    = yield :head
+    %link{ href: "/icon.png", rel: "icon", type: "image/png" }
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = stylesheet_link_tag "bootstrap.min", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+    = turbo_include_tags
+    = stylesheet_link_tag "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  %body
+    - flash.each do |key, message|
+      .alert.alert-dismissible{ class: "alert-#{key}" }
+        %button.close{ "aria-label" => "Close", "data-bs-dismiss" => "alert" }
+          %span{ "aria-hidden" => "true" } &times;
+        = message
+
+    .container.d-flex.justify-content-center.align-items-center.min-vh-100
+      .card.shadow-sm.p-4(style="max-width: 400px;")
+        %h2.text-center Seja Bem-Vindo
+        = yield
