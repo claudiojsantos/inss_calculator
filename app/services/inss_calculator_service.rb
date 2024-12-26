@@ -21,7 +21,7 @@ class InssCalculatorService
 
       next if base_salary <= 0
 
-      bracket_discount = (base_salary * bracket.rate.to_d).truncate(2)
+      bracket_discount = (base_salary * (bracket.rate.to_d / 100)).truncate(2)
       total_discount += bracket_discount
 
       remaining_salary -= base_salary
