@@ -54,6 +54,7 @@ gem 'dartsass-rails'
 
 gem 'sidekiq'
 
+gem 'bootstrap5-kaminari-views'
 gem 'kaminari'
 
 group :development, :test do
