@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy', as: :logout
   post 'authenticate', to: 'authentication#authenticate'
+
+  resources :applicants, only: [ :index, :show, :new ]
 end
