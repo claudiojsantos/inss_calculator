@@ -14,14 +14,14 @@ class InssCalculatorService
       max_salary = BigDecimal(bracket.max_salary.to_s) if bracket.max_salary
 
       base_salary = if max_salary
-                            [ remaining_salary, max_salary - min_salary ].min
+                            [ remaining_salary, (max_salary - min_salary) ].min
       else
                             remaining_salary
       end
 
       next if base_salary <= 0
 
-      bracket_discount = (base_salary * BigDecimal(bracket.rate.to_s)).truncate(2)
+      bracket_discount = (base_salary * bracket.rate.to_d).truncate(2)
       total_discount += bracket_discount
 
       remaining_salary -= base_salary
