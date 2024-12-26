@@ -30,6 +30,10 @@
                 = link_to root_path, data: { turbo_frame: "main_frame" }, class: "nav-link text-light d-flex align-items-center" do
                   %i.fas.fa-home
                   %span.ms-2 Home
+              %li.nav-item
+                = link_to applicants_path, data: { turbo_frame: "main_frame" }, class: "nav-link text-light d-flex align-items-center" do
+                  %i.fas.fa-users
+                  %span.ms-2 Proponentes
           .mt-auto.mb-4
             %li.nav-item
               %button{ type: "submit", class: "btn btn-link text-danger", form: "logout-form" }
