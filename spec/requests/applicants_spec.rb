@@ -33,4 +33,26 @@ RSpec.describe "Applicants", type: :request do
       expect(assigns(:applicant).contacts.size).to eq(1)
     end
   end
+
+  describe "POST /applicants" do
+    context 'when params are valid' do
+      let(:valid_params) do
+        applicant = build(:applicant)
+        {
+          applicant: applicant.attributes.merge(
+            addresses_attributes: [ attributes_for(:address) ],
+            contacts_attributes: [ attributes_for(:contact) ]
+          )
+        }
+      end
+
+      it 'creates a new applicant' do
+        expect {
+          post '/applicants', params: valid_params
+      }.to change(Applicant, :count).by(1)
+        .and change(Address, :count).by(1)
+        .and change(Contact, :count).by(1)
+      end
+    end
+  end
 end
