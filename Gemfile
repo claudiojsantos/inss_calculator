@@ -54,6 +54,8 @@ gem 'dartsass-rails'
 
 gem 'sidekiq'
 
+gem 'kaminari'
+
 group :development, :test do
   gem 'brakeman', require: false
   gem 'byebug'
