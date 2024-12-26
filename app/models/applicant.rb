@@ -9,4 +9,12 @@ class Applicant < ApplicationRecord
   validates :birth_date, presence: true
   validates :salary, numericality: { greater_than: 0 }
   validates :inss_discount, numericality: { greater_than_or_equal_to: 0 }
+
+  after_create :enqueue_inss_discount_calculation, if: -> { inss_discount.nil? }
+
+  private
+
+  def enqueue_inss_discount_calculation
+    InssCalculatorJob.perform_later(self.salary, self.id)
+  end
 end
