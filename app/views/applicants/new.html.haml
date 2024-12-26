@@ -1,5 +1,5 @@
 %turbo-frame#main_frame
-  = form_with(model: @applicant, local: true, class: "mt-5", data: { controller: "nested-form" }) do |f|
+  = form_with(model: @applicant, local: true, class: "mt-5", data: { controller: "nested-form mask" }) do |f|
     .card.shadow-sm
       .card-header.bg-primary.text-white
         %h4.mb-0 Cadastro de Proponente
@@ -19,7 +19,7 @@
 
           .col-md-6.mb-3
             = f.label :document, "Documento"
-            = f.text_field :document, class: "form-control"
+            = f.text_field :document, class: "form-control", id: "applicant_document"
 
         .row
           .col-md-6.mb-3
@@ -28,7 +28,7 @@
 
           .col-md-6.mb-3
             = f.label :salary, "Salário"
-            = f.number_field :salary, step: 0.01, class: "form-control money-mask"
+            = f.text_field :salary, class: "form-control money-mask", id: "applicant_salary"
 
         .row
           .col-md-6.mb-3
@@ -61,11 +61,11 @@
 
               .col-md-2.mb-3
                 = address_fields.label :state, "Estado"
-                = address_fields.text_field :state, class: "form-control"
+                = address_fields.select :state, uf, { include_blank: 'Selecione o Estado' }, class: "form-control"
 
               .col-md-4.mb-3
                 = address_fields.label :zip_code, "CEP"
-                = address_fields.text_field :zip_code, class: "form-control"
+                = address_fields.text_field :zip_code, class: "form-control", id: "applicant_zip_code"
 
       .card-header.bg-secondary.text-white.mt-4
         %h5.mb-0 Contatos
@@ -77,11 +77,11 @@
               .row
                 .col-md-6.mb-3
                   = contact_fields.label :contact_type, "Tipo"
-                  = contact_fields.select :contact_type, Contact.contact_types.keys.map { |type| [type.humanize, type] }, {}, class: "form-control"
+                  = contact_fields.select :contact_type, Contact.contact_types.keys.map { |type| [type.humanize, type] }, {}, class: "form-control contact-type", data: { action: "change->mask#updateMask" }
                 
                 .col-md-6.mb-3
                   = contact_fields.label :value, "Valor"
-                  = contact_fields.text_field :value, class: "form-control"
+                  = contact_fields.text_field :value, class: "form-control contact-value"
 
               .d-flex.justify-content-end
                 = link_to "Remover", "#", class: "btn btn-danger btn-sm remove_fields", data: { action: "nested-form#remove_fields" }
