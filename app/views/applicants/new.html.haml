@@ -1,0 +1,107 @@
+%turbo-frame#main_frame
+  = form_with(model: @applicant, local: true, class: "mt-5", data: { controller: "nested-form" }) do |f|
+    .card.shadow-sm
+      .card-header.bg-primary.text-white
+        %h4.mb-0 Cadastro de Proponente
+
+      .card-body
+        - if @applicant.errors.any?
+          .alert.alert-danger
+            %h5 Erros ao salvar:
+            %ul
+              - @applicant.errors.full_messages.each do |message|
+                %li= message
+
+        .row
+          .col-md-6.mb-3
+            = f.label :name, "Nome"
+            = f.text_field :name, class: "form-control"
+
+          .col-md-6.mb-3
+            = f.label :document, "Documento"
+            = f.text_field :document, class: "form-control"
+
+        .row
+          .col-md-6.mb-3
+            = f.label :birth_date, "Data de Nascimento"
+            = f.date_field :birth_date, class: "form-control"
+
+          .col-md-6.mb-3
+            = f.label :salary, "Salário"
+            = f.number_field :salary, step: 0.01, class: "form-control money-mask"
+
+        .row
+          .col-md-6.mb-3
+            = f.label :inss_discount, "Desconto INSS"
+            = f.number_field :inss_discount, step: 0.01, class: "form-control"
+
+      .card-header.bg-secondary.text-white.mt-4
+        %h5.mb-0 Endereços
+
+      .card-body
+        = f.fields_for :addresses do |address_fields|
+          .nested-fields.border.p-3.mb-3.shadow-sm
+            .row
+              .col-md-6.mb-3
+                = address_fields.label :address, "Logradouro"
+                = address_fields.text_field :address, class: "form-control"
+              
+              .col-md-2.mb-3
+                = address_fields.label :number, "Número"
+                = address_fields.text_field :number, class: "form-control"
+
+              .col-md-4.mb-3
+                = address_fields.label :neighborhood, "Bairro"
+                = address_fields.text_field :neighborhood, class: "form-control"
+
+            .row
+              .col-md-4.mb-3
+                = address_fields.label :city, "Cidade"
+                = address_fields.text_field :city, class: "form-control"
+
+              .col-md-2.mb-3
+                = address_fields.label :state, "Estado"
+                = address_fields.text_field :state, class: "form-control"
+
+              .col-md-4.mb-3
+                = address_fields.label :zip_code, "CEP"
+                = address_fields.text_field :zip_code, class: "form-control"
+
+      .card-header.bg-secondary.text-white.mt-4
+        %h5.mb-0 Contatos
+
+      .card-body
+        #contacts{ data: { nested_form_target: "contacts" } }
+          = f.fields_for :contacts do |contact_fields|
+            .nested-fields.border.p-3.mb-3.shadow-sm
+              .row
+                .col-md-6.mb-3
+                  = contact_fields.label :contact_type, "Tipo"
+                  = contact_fields.select :contact_type, Contact.contact_types.keys.map { |type| [type.humanize, type] }, {}, class: "form-control"
+                
+                .col-md-6.mb-3
+                  = contact_fields.label :value, "Valor"
+                  = contact_fields.text_field :value, class: "form-control"
+
+              .d-flex.justify-content-end
+                = link_to "Remover", "#", class: "btn btn-danger btn-sm remove_fields", data: { action: "nested-form#remove_fields" }
+
+        .text-center
+          = link_to "Adicionar Contato", "#", class: "btn btn-secondary mt-3", data: { action: "nested-form#add_fields" }
+
+      .card-footer.text-center
+        = f.submit "Salvar", class: "btn btn-primary px-5"
+      
+      %template#contact-template{ data: { nested_form_target: "template" } }
+        .nested-fields.border.p-3.mb-3.shadow-sm
+          .row
+            .col-md-6.mb-3
+              = f.label :contact_type, "Tipo"
+              = f.select :contact_type, Contact.contact_types.keys.map { |type| [type.humanize, type] }, {}, class: "form-control", name: "applicant[contacts_attributes][NEW_RECORD][contact_type]"
+
+            .col-md-6.mb-3
+              = f.label :value, "Valor"
+              = f.text_field :value, class: "form-control", name: "applicant[contacts_attributes][NEW_RECORD][value]"
+
+          .d-flex.justify-content-end
+            = link_to "Remover", "#", class: "btn btn-danger btn-sm", data: { action: "nested-form#remove_fields" }

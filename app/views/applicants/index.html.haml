@@ -1,0 +1,31 @@
+%turbo-frame#main_frame
+  .container.mt-5
+    .row.justify-content-center
+      .col-md-10
+        %h1.text-center.text-primary.mb-4 Proponentes
+
+        .d-flex.justify-content-end.mb-3
+          = link_to new_applicant_path, class: "btn btn-primary d-flex align-items-center" do
+            %i.fas.fa-user-plus.me-2
+            Novo Proponente
+
+        .table-responsive
+          %table.table.table-hover.table-striped.shadow-sm
+            %thead.thead-dark
+              %tr
+                %th Nome
+                %th Documento
+                %th Salário
+                %th Desconto INSS
+            %tbody
+              - @applicants.each do |applicant|
+                %tr
+                  %td= applicant.name
+                  %td= format_cpf(applicant.document)
+                  %td= number_to_currency(applicant.salary)
+                  %td= number_to_currency(applicant.inss_discount)
+
+        .mt-4.d-flex.justify-content-center
+          = paginate @applicants, theme: 'bootstrap-5',
+                              pagination_class: "pagination-sm flex-wrap justify-content-center",
+                              nav_class: "d-inline-block"
