@@ -2,6 +2,13 @@ User.create!([
   { name: 'Admin', email: 'admin@test.com', password: '12345678' }
 ])
 
+InssBracket.create([
+  { min_salary: 0.0, max_salary: 1412.0, rate: 7.5 },
+  { min_salary: 1412.01, max_salary: 2666.68, rate: 9.0 },
+  { min_salary: 2666.69, max_salary: 4000.03, rate: 12.0 },
+  { min_salary: 4000.04, max_salary: 7786.02, rate: 14.0 }
+])
+
 10.times do
   applicant = Applicant.create!(
     name: Faker::Name.name,
