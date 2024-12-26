@@ -36,6 +36,8 @@ module InssFinal
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    config.assets.paths << Rails.root.join('vendor/javascript')
+
     config.i18n.default_locale = :'pt-BR'
 
     config.active_job.queue_adapter = :sidekiq
