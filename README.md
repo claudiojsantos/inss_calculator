@@ -1,4 +1,4 @@
-# Backend Challenge 20241227 Ruby on Rails - Projeto INSS Calculator
+# Monolitic App 20241227 Ruby on Rails - Projeto INSS Calculator
 
 Projeto de cadastro de proponentes e cálculo de desconto do INSS
 
