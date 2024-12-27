@@ -1,24 +1,57 @@
-# README
+# Backend Challenge 20241227 Ruby on Rails - Projeto INSS Calculator
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Projeto de cadastro de proponentes e cálculo de desconto do INSS]
 
-Things you may want to cover:
+## <u>**Tecnologias e Pré-requisitos**</u>
 
-* Ruby version
+Estas são as tecnologias e os pré-requisitos para a execução do projeto:
+- Ruby 3.3.3
+- Rails 8.0.1
+- PostgreSQL 15
+- Docker
+- Sidekiq
+- Rubocop
+- Haml Format
 
-* System dependencies
+## <u>**Instalação**</u>
 
-* Configuration
+O endereço do repositório é:
 
-* Database creation
+https://github.com/claudiojsantos/inss_calculator
 
-* Database initialization
+Utilizando o Docker, execute os comandos abaixo:
 
-* How to run the test suite
+```sh
+docker-compose up -d --build (container)
+docker-compose -f docker-compose-dev up -d --build (localmente)
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+Caso deseje instalar localmente, considerando que já tenha o Ruby e o MongoDB instalados, execute os comandos abaixo:
 
-* Deployment instructions
+```sh
+bundle install
+rails s
+redis-server
+bundle exec sidekiq
+```  
 
-* ...
+Para executar os testes automatizados, execute o comando abaixo:
+
+```sh
+rspec
+```
+
+---
+## <u>**Utilização**</u>
+
+Ao subir o container, se banco de dados será criado automaticamente. Para acessar a aplicação, utilize a seguinte credencial:
+
+```sh
+email: admin@test.com
+password: 12345678
+```
+
+---
+**Cláudio Santos**  
+**claudio@sistnet.com.br**.  
+Linkedin: **https://www.linkedin.com/in/claudio-santos-3b071140/**
