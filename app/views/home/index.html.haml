@@ -1,8 +1,32 @@
 %turbo-frame#main_frame
-  .text-center.mt-5
-    %h1 Bem-vindo ao Projeto!
-    %p
-      Você está logado como #{current_user&.email}.
-    .mt-5
-      %turbo-frame#main_frame
-        %p Selecione uma opção do menu ao lado para começar.
+  %h1.text-center.mt-5 Proponentes por Faixa Salarial
+
+  .container.mt-4
+    - @salary_bracket.each do |bracket, applicants|
+      .card.mb-4.shadow
+        .card-header.bg-primary.text-white.text-center
+          - if bracket.is_a?(InssBracket)
+            %h2.mb-0 #{number_to_currency(bracket.min_salary, unit: "R$ ", separator: ",", delimiter: ".")} - #{number_to_currency(bracket.max_salary, unit: "R$ ", separator: ",", delimiter: ".")}
+          - else
+            %h2.mb-0= bracket
+        .card-body
+          %table.table.table-striped.table-hover
+            %thead.thead-dark
+              %tr
+                %th.text-center Nome
+                %th.text-center Salário
+                %th.text-center Desconto
+            %tbody
+              - if applicants.any?
+                - applicants.each do |applicant|
+                  %tr
+                    %td.text-center= applicant.name
+                    %td.text-center= number_to_currency(applicant.salary, unit: "R$ ", separator: ",", delimiter: ".")
+                    %td.text-center= number_to_currency(applicant.inss_discount, unit: "R$ ", separator: ",", delimiter: ".")
+              - else
+                %tr
+                  %td.text-center{ colspan: 2 } Nenhum funcionário nesta faixa
+
+      - if applicants.respond_to?(:total_pages)
+        .d-flex.justify-content-center.mt-3
+          = render partial: 'kaminari/paginator', locals: { applicants: applicants }
