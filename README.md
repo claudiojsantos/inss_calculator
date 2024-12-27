@@ -1,6 +1,6 @@
 # Backend Challenge 20241227 Ruby on Rails - Projeto INSS Calculator
 
-Projeto de cadastro de proponentes e cálculo de desconto do INSS]
+Projeto de cadastro de proponentes e cálculo de desconto do INSS
 
 ## <u>**Tecnologias e Pré-requisitos**</u>
 
