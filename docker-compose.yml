@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   app:
-    build: .
+    image: claudiosantos/inss-calculator:1.0.0
     container_name: inss_app
     volumes:
       - .:/app
@@ -32,6 +32,21 @@ services:
     image: "redis:alpine"
     ports:
       - "6379:6379"
+  
+  sidekiq:
+    image: claudiosantos/inss-calculator:1.0.0
+    container_name: inss_sidekiq
+    command: bundle exec sidekiq
+    volumes:
+      - .:/app
+    environment:
+      host: db
+      username: postgres
+      password: postgres
+      database: inss_dev
+    depends_on:
+      - app
+      - redis
 
 volumes:
   postgres_data:
